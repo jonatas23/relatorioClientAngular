@@ -1,0 +1,185 @@
+/* Estilos gerais do componente */
+.header {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.main-content {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+.card {
+  background: #34495e;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  border: 1px solid #4a5f7a;
+}
+
+/* Estilos para os campos */
+.p-field {
+  margin-bottom: 1.5rem;
+}
+
+.p-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #ecf0f1;
+  font-size: 1rem;
+}
+
+/* Estilos para botões */
+.p-button-lg {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .header h2 {
+    font-size: 1.5rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+}
+
+/* Estilos para o modal */
+:host ::ng-deep .p-dialog .p-dialog-header {
+  background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 2rem;
+  background: #34495e;
+  color: #ecf0f1;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding: 1rem 2rem;
+  border-top: 1px solid #4a5f7a;
+  background: #34495e;
+}
+
+/* Animações suaves */
+.card, .p-button {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+}
+
+/* Estilos para mensagem de acesso restrito */
+.text-center i.pi-lock {
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+/* Estilos para campos obrigatórios */
+.p-field.p-invalid label {
+  color: #e74c3c;
+}
+
+/* Melhorias visuais */
+.w-full {
+  width: 100%;
+}
+
+/* Loading state para botões */
+.p-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Estilos personalizados para inputs e selects do PrimeNG */
+:host ::ng-deep .p-inputtext {
+  background: #2c3e50;
+  border: 2px solid #4a5f7a;
+  color: #ecf0f1;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+:host ::ng-deep .p-select {
+  background: #2c3e50;
+  border: 2px solid #4a5f7a;
+  border-radius: 8px;
+}
+
+:host ::ng-deep .p-select:not(.p-disabled):hover {
+  border-color: #3498db;
+}
+
+:host ::ng-deep .p-select .p-select-label {
+  color: #ecf0f1;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+:host ::ng-deep .p-datepicker-input {
+  background: #2c3e50;
+  border: 2px solid #4a5f7a;
+  color: #ecf0f1;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+:host ::ng-deep .p-datepicker-input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Melhorar aparência dos botões */
+:host ::ng-deep .p-button {
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-button-primary {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  border: none;
+}
+
+:host ::ng-deep .p-button-primary:hover {
+  background: linear-gradient(135deg, #2980b9 0%, #21618c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+:host ::ng-deep .p-button-danger {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  border: none;
+}
+
+:host ::ng-deep .p-button-danger:hover {
+  background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}

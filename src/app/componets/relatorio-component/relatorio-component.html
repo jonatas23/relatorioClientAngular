@@ -1,0 +1,104 @@
+<!-- Header -->
+<div class="header" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 1rem 2rem; border-bottom: 2px solid #4a5f7a; display: flex; justify-content: space-between; align-items: center;">
+  <h2 style="margin: 0; color: #ecf0f1; font-weight: 700; font-size: 1.8rem;">Sistema de Relatórios</h2>
+  <div *ngIf="usuarioLogado" style="display: flex; align-items: center; gap: 1rem;">
+    <span style="color: #bdc3c7; font-weight: 500;">Olá, {{ usuario }}</span>
+    <button pButton type="button" label="Deslogar" icon="pi pi-sign-out" class="p-button-sm p-button-outlined p-button-danger" (click)="deslogar()"></button>
+  </div>
+</div>
+
+<!-- Conteúdo Principal -->
+<div class="main-content" style="padding: 2rem;">
+  <!-- Área de Relatórios (visível apenas quando logado) -->
+  <div *ngIf="usuarioLogado" class="card" style="max-width: 600px; margin: auto; padding: 2.5rem;">
+    <h3 style="text-align: center; margin-bottom: 2rem; color: #ecf0f1; font-weight: 600; font-size: 1.5rem;">Gerar Relatório</h3>
+
+    <div class="p-field mb-3">
+      <label for="relatorio">Relatório</label>
+      <p-select
+        inputId="relatorio"
+        [options]="relatorios"
+        [(ngModel)]="relatorioSelecionado"
+        placeholder="Selecione o Relatório"
+        styleClass="w-full">
+      </p-select>
+    </div>
+
+    <div class="p-field mb-4">
+      <label for="data">Data</label>
+      <p-datePicker
+        inputId="data"
+        [(ngModel)]="dataSelecionada"
+        [showTime]="true"
+        hourFormat="24"
+        showIcon
+        styleClass="w-full">
+      </p-datePicker>
+    </div>
+
+    <div class="text-center">
+      <button
+        pButton
+        type="button"
+        label="Gerar Relatório"
+        icon="pi pi-file-pdf"
+        class="p-button-primary p-button-lg"
+        (click)="gerarRelatorio()"
+        [disabled]="!relatorioSelecionado">
+      </button>
+    </div>
+  </div>
+
+  <!-- Mensagem quando não logado -->
+  <div *ngIf="!usuarioLogado" class="text-center" style="padding: 4rem 2rem;">
+    <i class="pi pi-lock" style="font-size: 4rem; color: #bdc3c7; margin-bottom: 1rem;"></i>
+    <h3 style="color: #ecf0f1; margin-bottom: 1rem; font-weight: 600;">Acesso Restrito</h3>
+    <p style="color: #bdc3c7; margin-bottom: 2rem; font-size: 1.1rem;">Você precisa estar logado para acessar os relatórios.</p>
+    <button pButton type="button" label="Fazer Login" icon="pi pi-sign-in" class="p-button-primary p-button-lg" (click)="mostrarModalLogin = true"></button>
+  </div>
+</div>
+
+<!-- Modal de Login -->
+<p-dialog
+  header="Login no Sistema"
+  [(visible)]="mostrarModalLogin"
+  [modal]="true"
+  [style]="{width: '400px'}"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false">
+
+  <div class="p-field mb-4">
+    <label for="usuario-modal">Usuário</label>
+    <input
+      id="usuario-modal"
+      type="text"
+      pInputText
+      [(ngModel)]="usuario"
+      placeholder="Digite o seu usuário"
+      class="w-full"
+      (keyup.enter)="logar()" />
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-text p-button-secondary"
+        (click)="cancelarLogin()">
+      </button>
+      <button
+        pButton
+        type="button"
+        label="Entrar"
+        icon="pi pi-check"
+        class="p-button-primary"
+        (click)="logar()"
+        [disabled]="!usuario.trim()">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
