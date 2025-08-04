@@ -171,7 +171,7 @@
             <td>
               <div style="display: flex; flex-direction: column;">
                 <span style="font-weight: 600; color: #ecf0f1;">
-                  {{ relatorio.tipoRelatorioDescricao }}
+                  {{ relatorio.tipoRelatorio }}
                 </span>
                 <small style="color: #bdc3c7; margin-top: 0.2rem;">
                   ID: {{ relatorio.idSolicitacao }}
@@ -182,7 +182,7 @@
             <!-- Status -->
             <td>
               <p-tag
-                [value]="relatorio.statusDescricao"
+                [value]="relatorio.status"
                 [severity]="getStatusSeverity(relatorio.status)">
               </p-tag>
             </td>

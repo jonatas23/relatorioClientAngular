@@ -111,7 +111,6 @@ export class RelatorioComponent implements OnInit, OnDestroy {
 
     this.notificationService.getNotifications().subscribe(msg => {
       console.log('Nova notificação:', msg);
-      alert(msg); // ou renderize no componente
       this.messageService.add({
         severity: 'info',
         summary: 'Notificação',
