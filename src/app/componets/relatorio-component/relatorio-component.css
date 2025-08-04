@@ -1,4 +1,7 @@
-/* Estilos gerais do componente */
+/* ========================================================================================
+   ESTILOS GERAIS DO COMPONENTE
+   ======================================================================================== */
+
 .header {
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
@@ -13,9 +16,18 @@
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   border: 1px solid #4a5f7a;
+  transition: all 0.3s ease;
 }
 
-/* Estilos para os campos */
+.card:hover {
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+}
+
+/* ========================================================================================
+   ESTILOS PARA CAMPOS E FORMULÁRIOS
+   ======================================================================================== */
+
 .p-field {
   margin-bottom: 1.5rem;
 }
@@ -28,133 +40,28 @@
   font-size: 1rem;
 }
 
-/* Estilos para botões */
+.p-field.p-invalid label {
+  color: #e74c3c;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* ========================================================================================
+   ESTILOS PARA BOTÕES
+   ======================================================================================== */
+
 .p-button-lg {
   padding: 0.75rem 2rem;
   font-size: 1.1rem;
 }
 
-/* Estilos responsivos */
-@media (max-width: 768px) {
-  .header {
-    padding: 1rem;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-
-  .header h2 {
-    font-size: 1.5rem;
-  }
-
-  .main-content {
-    padding: 1rem;
-  }
-
-  .card {
-    padding: 1.5rem;
-  }
-}
-
-/* Estilos para o modal */
-:host ::ng-deep .p-dialog .p-dialog-header {
-  background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
-  color: white;
-  border-radius: 12px 12px 0 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-:host ::ng-deep .p-dialog .p-dialog-content {
-  padding: 2rem;
-  background: #34495e;
-  color: #ecf0f1;
-}
-
-:host ::ng-deep .p-dialog .p-dialog-footer {
-  padding: 1rem 2rem;
-  border-top: 1px solid #4a5f7a;
-  background: #34495e;
-}
-
-/* Animações suaves */
-.card, .p-button {
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
-  transform: translateY(-2px);
-}
-
-/* Estilos para mensagem de acesso restrito */
-.text-center i.pi-lock {
-  display: block;
-  margin: 0 auto 1rem;
-}
-
-/* Estilos para campos obrigatórios */
-.p-field.p-invalid label {
-  color: #e74c3c;
-}
-
-/* Melhorias visuais */
-.w-full {
-  width: 100%;
-}
-
-/* Loading state para botões */
 .p-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Estilos personalizados para inputs e selects do PrimeNG */
-:host ::ng-deep .p-inputtext {
-  background: #2c3e50;
-  border: 2px solid #4a5f7a;
-  color: #ecf0f1;
-  border-radius: 8px;
-  padding: 0.75rem;
-  font-size: 1rem;
-}
-
-:host ::ng-deep .p-inputtext:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-
-:host ::ng-deep .p-select {
-  background: #2c3e50;
-  border: 2px solid #4a5f7a;
-  border-radius: 8px;
-}
-
-:host ::ng-deep .p-select:not(.p-disabled):hover {
-  border-color: #3498db;
-}
-
-:host ::ng-deep .p-select .p-select-label {
-  color: #ecf0f1;
-  padding: 0.75rem;
-  font-size: 1rem;
-}
-
-:host ::ng-deep .p-datepicker-input {
-  background: #2c3e50;
-  border: 2px solid #4a5f7a;
-  color: #ecf0f1;
-  border-radius: 8px;
-  padding: 0.75rem;
-  font-size: 1rem;
-}
-
-:host ::ng-deep .p-datepicker-input:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-
-/* Melhorar aparência dos botões */
 :host ::ng-deep .p-button {
   border-radius: 8px;
   font-weight: 600;
@@ -182,4 +89,697 @@
   background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+:host ::ng-deep .p-button-success {
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  border: none;
+}
+
+:host ::ng-deep .p-button-success:hover {
+  background: linear-gradient(135deg, #229954 0%, #1e8449 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+}
+
+:host ::ng-deep .p-button-warning {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  border: none;
+}
+
+:host ::ng-deep .p-button-warning:hover {
+  background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+}
+
+/* ========================================================================================
+   ESTILOS PARA INPUTS E SELECTS
+   ======================================================================================== */
+
+:host ::ng-deep .p-inputtext {
+  background: #2c3e50;
+  border: 2px solid #4a5f7a;
+  color: #ecf0f1;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+:host ::ng-deep .p-select {
+  background: #2c3e50;
+  border: 2px solid #4a5f7a;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-select:not(.p-disabled):hover {
+  border-color: #3498db;
+}
+
+:host ::ng-deep .p-select .p-select-label {
+  color: #ecf0f1;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+:host ::ng-deep .p-select-overlay {
+  background: #2c3e50;
+  border: 1px solid #4a5f7a;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+:host ::ng-deep .p-select-overlay .p-select-list .p-select-option {
+  color: #ecf0f1;
+  padding: 0.75rem;
+}
+
+:host ::ng-deep .p-select-overlay .p-select-list .p-select-option:hover {
+  background: #3498db;
+  color: white;
+}
+
+:host ::ng-deep .p-datepicker-input {
+  background: #2c3e50;
+  border: 2px solid #4a5f7a;
+  color: #ecf0f1;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-datepicker-input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+/* ========================================================================================
+   ESTILOS PARA TABELA
+   ======================================================================================== */
+
+:host ::ng-deep .p-datatable {
+  background: transparent;
+  border: none;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-header {
+  background: #2c3e50;
+  border: 1px solid #4a5f7a;
+  border-radius: 8px 8px 0 0;
+  padding: 1rem;
+  color: #ecf0f1;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background: #2c3e50;
+  border: 1px solid #4a5f7a;
+  color: #ecf0f1;
+  font-weight: 600;
+  padding: 1rem 0.75rem;
+  font-size: 0.95rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr {
+  background: #34495e;
+  border: 1px solid #4a5f7a;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background: #3d566e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  border: 1px solid #4a5f7a;
+  padding: 1rem 0.75rem;
+  color: #ecf0f1;
+  vertical-align: middle;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-footer {
+  background: #2c3e50;
+  border: 1px solid #4a5f7a;
+  border-radius: 0 0 8px 8px;
+  color: #ecf0f1;
+  padding: 1rem;
+}
+
+/* ========================================================================================
+   ESTILOS PARA PAGINAÇÃO
+   ======================================================================================== */
+
+:host ::ng-deep .p-paginator {
+  background: #2c3e50;
+  border: 1px solid #4a5f7a;
+  border-radius: 0 0 8px 8px;
+  color: #ecf0f1;
+  padding: 0.75rem;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+  background: transparent;
+  border: 1px solid #4a5f7a;
+  color: #ecf0f1;
+  border-radius: 4px;
+  margin: 0 0.2rem;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page:hover {
+  background: #3498db;
+  border-color: #3498db;
+  color: white;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: #3498db;
+  border-color: #3498db;
+  color: white;
+}
+
+:host ::ng-deep .p-paginator .p-dropdown {
+  background: #2c3e50;
+  border: 1px solid #4a5f7a;
+  color: #ecf0f1;
+}
+
+/* ========================================================================================
+   ESTILOS PARA TAGS DE STATUS
+   ======================================================================================== */
+
+:host ::ng-deep .p-tag {
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+:host ::ng-deep .p-tag.p-tag-success {
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  color: white;
+}
+
+:host ::ng-deep .p-tag.p-tag-info {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+}
+
+:host ::ng-deep .p-tag.p-tag-warning {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  color: white;
+}
+
+:host ::ng-deep .p-tag.p-tag-danger {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+}
+
+/* ========================================================================================
+   ESTILOS PARA PROGRESS BAR
+   ======================================================================================== */
+
+:host ::ng-deep .p-progressbar {
+  height: 0.8rem;
+  background: #2c3e50;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #4a5f7a;
+}
+
+:host ::ng-deep .p-progressbar .p-progressbar-value {
+  background: linear-gradient(90deg, #3498db 0%, #2ecc71 50%, #27ae60 100%);
+  border-radius: 10px;
+  transition: width 0.6s ease-in-out;
+}
+
+.progress-bar-sm {
+  height: 0.6rem !important;
+}
+
+/* ========================================================================================
+   ESTILOS PARA MODAL/DIALOG
+   ======================================================================================== */
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 1.5rem 2rem;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 2rem;
+  background: #34495e;
+  color: #ecf0f1;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding: 1rem 2rem;
+  border-top: 1px solid #4a5f7a;
+  background: #34495e;
+  border-radius: 0 0 12px 12px;
+}
+
+:host ::ng-deep .p-dialog-mask {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* ========================================================================================
+   ESTILOS PARA CONFIRMAÇÃO
+   ======================================================================================== */
+
+:host ::ng-deep .p-confirm-dialog .p-dialog-header {
+  background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
+}
+
+:host ::ng-deep .p-confirm-dialog .p-dialog-content {
+  background: #34495e;
+  color: #ecf0f1;
+}
+
+:host ::ng-deep .p-confirm-dialog .p-dialog-footer {
+  background: #34495e;
+}
+
+/* ========================================================================================
+   ESTILOS PARA TOAST
+   ======================================================================================== */
+
+:host ::ng-deep .p-toast .p-toast-message {
+  background: #34495e;
+  border: 1px solid #4a5f7a;
+  border-radius: 8px;
+  color: #ecf0f1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+:host ::ng-deep .p-toast .p-toast-message .p-toast-message-content {
+  padding: 1rem;
+}
+
+:host ::ng-deep .p-toast .p-toast-message.p-toast-message-success {
+  border-left: 4px solid #27ae60;
+}
+
+:host ::ng-deep .p-toast .p-toast-message.p-toast-message-info {
+  border-left: 4px solid #3498db;
+}
+
+:host ::ng-deep .p-toast .p-toast-message.p-toast-message-warn {
+  border-left: 4px solid #f39c12;
+}
+
+:host ::ng-deep .p-toast .p-toast-message.p-toast-message-error {
+  border-left: 4px solid #e74c3c;
+}
+
+/* ========================================================================================
+   ESTILOS RESPONSIVOS
+   ======================================================================================== */
+
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .header h2 {
+    font-size: 1.5rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  /* Tabela responsiva */
+  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th,
+  :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.85rem;
+  }
+
+  /* Ocultar colunas menos importantes em telas pequenas */
+  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-child(5),
+  :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(5),
+  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-child(6),
+  :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(6) {
+    display: none;
+  }
+
+  /* Ajustar botões para mobile */
+  :host ::ng-deep .p-button-sm {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  /* Toast em mobile */
+  :host ::ng-deep .p-toast {
+    width: 90%;
+    left: 5%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Esconder mais colunas em telas muito pequenas */
+  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-child(4),
+  :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(4) {
+    display: none;
+  }
+
+  /* Ajustar layout do cabeçalho da lista */
+  .header {
+    padding: 0.5rem;
+  }
+
+  .header h2 {
+    font-size: 1.3rem;
+  }
+
+  /* Cards menores */
+  .card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Formulário mais compacto */
+  .p-field {
+    margin-bottom: 1rem;
+  }
+}
+
+/* ========================================================================================
+   ANIMAÇÕES E TRANSIÇÕES
+   ======================================================================================== */
+
+/* Animação de entrada para as linhas da tabela */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animação de loading */
+:host ::ng-deep .p-datatable .p-datatable-loading-overlay {
+  background: rgba(44, 62, 80, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+:host ::ng-deep .p-progress-spinner {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+:host ::ng-deep .p-progress-spinner .p-progress-spinner-circle {
+  stroke: #3498db;
+  animation: spinner-rotate 2s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse para elementos com notificações */
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+  }
+}
+
+/* ========================================================================================
+   ESTILOS PARA MENSAGENS DE ACESSO RESTRITO
+   ======================================================================================== */
+
+.text-center i.pi-lock {
+  display: block;
+  margin: 0 auto 1rem;
+  animation: lockBounce 2s ease-in-out infinite;
+}
+
+@keyframes lockBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* ========================================================================================
+   ESTILOS PARA STATUS DE CONEXÃO
+   ======================================================================================== */
+
+.text-green-400 {
+  color: #27ae60 !important;
+}
+
+.text-red-400 {
+  color: #e74c3c !important;
+}
+
+/* Indicador de conexão pulsante */
+.pi-wifi.text-green-400 {
+  animation: wifiPulse 2s ease-in-out infinite;
+}
+
+@keyframes wifiPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ========================================================================================
+   ESTILOS PARA PROGRESSO EM TEMPO REAL
+   ======================================================================================== */
+
+:host ::ng-deep .p-progressbar .p-progressbar-value.progress-updating {
+  animation: progressGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes progressGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
+  }
+}
+
+/* ========================================================================================
+   ESTILOS PARA FILTROS E BUSCA
+   ======================================================================================== */
+
+:host ::ng-deep .p-datatable .p-datatable-header input[type="text"] {
+  background: #2c3e50;
+  border: 2px solid #4a5f7a;
+  color: #ecf0f1;
+  border-radius: 8px;
+  padding: 0.5rem 2.5rem 0.5rem 2.5rem;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-header input[type="text"]:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-header input[type="text"]::placeholder {
+  color: #bdc3c7;
+}
+
+/* ========================================================================================
+   ESTILOS PARA TOOLTIPS
+   ======================================================================================== */
+
+:host ::ng-deep .p-tooltip .p-tooltip-text {
+  background: #2c3e50;
+  color: #ecf0f1;
+  border: 1px solid #4a5f7a;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.75rem;
+  max-width: 200px;
+}
+
+:host ::ng-deep .p-tooltip .p-tooltip-arrow {
+  border-top-color: #2c3e50;
+  border-bottom-color: #2c3e50;
+  border-left-color: #2c3e50;
+  border-right-color: #2c3e50;
+}
+
+/* ========================================================================================
+   ESTILOS UTILITÁRIOS
+   ======================================================================================== */
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.gap-1 {
+  gap: 0.5rem;
+}
+
+.gap-2 {
+  gap: 1rem;
+}
+
+/* ========================================================================================
+   MELHORIAS DE ACESSIBILIDADE
+   ======================================================================================== */
+
+/* Foco visível melhorado */
+:host ::ng-deep *:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Melhor contraste para texto */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td small {
+  color: #bdc3c7;
+  font-size: 0.8rem;
+}
+
+/* Estados hover mais claros */
+:host ::ng-deep .p-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  transition: transform 0.2s ease;
+}
+
+/* ========================================================================================
+   ESTILOS PARA EXPANSÃO DE LINHAS
+   ======================================================================================== */
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr.p-datatable-row-expansion {
+  background: #2c3e50;
+  border: 1px solid #4a5f7a;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr.p-datatable-row-expansion > td {
+  padding: 0;
+  border: none;
+}
+
+/* ========================================================================================
+   CUSTOMIZAÇÕES FINAIS
+   ======================================================================================== */
+
+/* Scrollbar customizada */
+:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar-track {
+  background: #2c3e50;
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar-thumb {
+  background: #4a5f7a;
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #5a6f8a;
+}
+
+/* Remover seleção de texto em elementos de interface */
+:host ::ng-deep .p-button,
+:host ::ng-deep .p-tag,
+:host ::ng-deep .p-paginator {
+  user-select: none;
+}
+
+/* Melhorar aparência dos ícones */
+:host ::ng-deep .pi {
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+}
+
+/* Estilo para indicar elementos clicáveis */
+:host ::ng-deep .p-button,
+:host ::ng-deep .p-paginator-page,
+:host ::ng-deep .p-datatable .p-sortable-column {
+  cursor: pointer;
 }

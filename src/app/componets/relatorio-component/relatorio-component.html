@@ -2,59 +2,345 @@
 <div class="header" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 1rem 2rem; border-bottom: 2px solid #4a5f7a; display: flex; justify-content: space-between; align-items: center;">
   <h2 style="margin: 0; color: #ecf0f1; font-weight: 700; font-size: 1.8rem;">Sistema de Relatórios</h2>
   <div *ngIf="usuarioLogado" style="display: flex; align-items: center; gap: 1rem;">
+    <!-- Status da conexão WebSocket -->
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <i class="pi"
+         [ngClass]="conectadoWebSocket ? 'pi-wifi text-green-400' : 'pi-wifi text-red-400'"
+         style="font-size: 1.2rem;"
+         [title]="conectadoWebSocket ? 'Conectado em tempo real' : 'Desconectado'">
+      </i>
+      <span style="color: #bdc3c7; font-size: 0.9rem;">
+        {{ conectadoWebSocket ? 'Online' : 'Offline' }}
+      </span>
+    </div>
+
     <span style="color: #bdc3c7; font-weight: 500;">Olá, {{ usuario }}</span>
-    <button pButton type="button" label="Deslogar" icon="pi pi-sign-out" class="p-button-sm p-button-outlined p-button-danger" (click)="deslogar()"></button>
+    <button pButton type="button" label="Deslogar" icon="pi pi-sign-out"
+            class="p-button-sm p-button-outlined p-button-danger" (click)="deslogar()">
+    </button>
   </div>
 </div>
 
 <!-- Conteúdo Principal -->
 <div class="main-content" style="padding: 2rem;">
   <!-- Área de Relatórios (visível apenas quando logado) -->
-  <div *ngIf="usuarioLogado" class="card" style="max-width: 600px; margin: auto; padding: 2.5rem;">
-    <h3 style="text-align: center; margin-bottom: 2rem; color: #ecf0f1; font-weight: 600; font-size: 1.5rem;">Gerar Relatório</h3>
+  <div *ngIf="usuarioLogado">
 
-    <div class="p-field mb-3">
-      <label for="relatorio">Relatório</label>
-      <p-select
-        inputId="relatorio"
-        [options]="relatorios"
-        [(ngModel)]="relatorioSelecionado"
-        placeholder="Selecione o Relatório"
-        styleClass="w-full">
-      </p-select>
+    <!-- Formulário de Geração -->
+    <div class="card" style="max-width: 600px; margin: 0 auto 2rem auto; padding: 2.5rem;">
+      <h3 style="text-align: center; margin-bottom: 2rem; color: #ecf0f1; font-weight: 600; font-size: 1.5rem;">
+        Gerar Novo Relatório
+      </h3>
+
+      <div class="p-field mb-3">
+        <label for="relatorio">Tipo de Relatório *</label>
+        <p-select
+          inputId="relatorio"
+          [options]="tiposRelatorio"
+          [(ngModel)]="relatorioSelecionado"
+          placeholder="Selecione o tipo de relatório"
+          styleClass="w-full"
+          [showClear]="true">
+        </p-select>
+      </div>
+
+      <div class="p-field mb-4">
+        <label for="data">Agendar Para</label>
+        <p-datePicker
+          inputId="data"
+          [(ngModel)]="dataSelecionada"
+          [showTime]="true"
+          hourFormat="24"
+          showIcon
+          [showClear]="true"
+          placeholder="Executar agora se não especificado"
+          styleClass="w-full">
+        </p-datePicker>
+      </div>
+
+      <div class="text-center">
+        <button
+          pButton
+          type="button"
+          label="Gerar Relatório"
+          icon="pi pi-file-pdf"
+          class="p-button-primary p-button-lg"
+          (click)="gerarRelatorio()"
+          [disabled]="!relatorioSelecionado">
+        </button>
+      </div>
     </div>
 
-    <div class="p-field mb-4">
-      <label for="data">Data</label>
-      <p-datePicker
-        inputId="data"
-        [(ngModel)]="dataSelecionada"
-        [showTime]="true"
-        hourFormat="24"
-        showIcon
-        styleClass="w-full">
-      </p-datePicker>
-    </div>
+    <!-- Lista de Relatórios -->
+    <div class="card" style="padding: 2rem;">
+      <!-- Cabeçalho da Lista -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 style="margin: 0; color: #ecf0f1; font-weight: 600; font-size: 1.4rem;">
+          Meus Relatórios
+        </h3>
 
-    <div class="text-center">
-      <button
-        pButton
-        type="button"
-        label="Gerar Relatório"
-        icon="pi pi-file-pdf"
-        class="p-button-primary p-button-lg"
-        (click)="gerarRelatorio()"
-        [disabled]="!relatorioSelecionado">
-      </button>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <!-- Toggle Auto Refresh -->
+          <button pButton type="button"
+                  [icon]="autoRefresh ? 'pi pi-pause' : 'pi pi-play'"
+                  [label]="autoRefresh ? 'Pausar' : 'Ativar'"
+                  class="p-button-sm p-button-outlined"
+                  [class.p-button-success]="autoRefresh"
+                  [class.p-button-secondary]="!autoRefresh"
+                  (click)="toggleAutoRefresh()"
+                  title="Ativar/Desativar atualização automática">
+          </button>
+
+          <!-- Botão de Atualizar Manual -->
+          <button pButton type="button"
+                  icon="pi pi-refresh"
+                  class="p-button-sm p-button-outlined"
+                  (click)="carregarRelatorios()"
+                  [loading]="loading"
+                  title="Atualizar lista">
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabela de Relatórios -->
+      <p-table
+        [value]="relatorios"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} relatórios"
+        [rowsPerPageOptions]="[5, 10, 20, 50]"
+        styleClass="p-datatable-sm"
+        [globalFilterFields]="['tipoRelatorioDescricao', 'status', 'mensagemStatus']"
+        #dt>
+
+        <!-- Cabeçalho com filtro global -->
+        <ng-template pTemplate="caption">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #ecf0f1;">
+              Total: {{ relatorios.length }} relatório(s)
+            </span>
+            <div style="position: relative;">
+              <i class="pi pi-search" style="position: absolute; top: 50%; left: 0.75rem; transform: translateY(-50%); color: #bdc3c7;"></i>
+              <input pInputText
+                     type="text"
+                     placeholder="Buscar relatórios..."
+                     (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                     style="padding-left: 2.5rem; width: 250px;">
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- Cabeçalhos das Colunas -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="tipoRelatorioDescricao" style="width: 20%;">
+              Tipo de Relatório
+              <p-sortIcon field="tipoRelatorioDescricao"></p-sortIcon>
+            </th>
+            <th pSortableColumn="status" style="width: 12%;">
+              Status
+              <p-sortIcon field="status"></p-sortIcon>
+            </th>
+            <th pSortableColumn="progresso" style="width: 15%;">
+              Progresso
+              <p-sortIcon field="progresso"></p-sortIcon>
+            </th>
+            <th pSortableColumn="dataSolicitacao" style="width: 15%;">
+              Solicitado em
+              <p-sortIcon field="dataSolicitacao"></p-sortIcon>
+            </th>
+            <th pSortableColumn="agendarPara" style="width: 15%;">
+              Agendado para
+              <p-sortIcon field="agendarPara"></p-sortIcon>
+            </th>
+            <th style="width: 13%;">
+              Arquivo
+            </th>
+            <th style="width: 10%;">
+              Ações
+            </th>
+          </tr>
+        </ng-template>
+
+        <!-- Corpo da Tabela -->
+        <ng-template pTemplate="body" let-relatorio>
+          <tr>
+            <!-- Tipo de Relatório -->
+            <td>
+              <div style="display: flex; flex-direction: column;">
+                <span style="font-weight: 600; color: #ecf0f1;">
+                  {{ relatorio.tipoRelatorioDescricao }}
+                </span>
+                <small style="color: #bdc3c7; margin-top: 0.2rem;">
+                  ID: {{ relatorio.idSolicitacao }}
+                </small>
+              </div>
+            </td>
+
+            <!-- Status -->
+            <td>
+              <p-tag
+                [value]="relatorio.statusDescricao"
+                [severity]="getStatusSeverity(relatorio.status)">
+              </p-tag>
+            </td>
+
+            <!-- Progresso -->
+            <td>
+              <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                <p-progressBar
+                  [value]="relatorio.progresso"
+                  [showValue]="false"
+                  styleClass="progress-bar-sm">
+                </p-progressBar>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <small style="color: #bdc3c7;">{{ relatorio.progresso }}%</small>
+                  <small *ngIf="relatorio.duracaoExecucaoMinutos" style="color: #bdc3c7;">
+                    {{ relatorio.duracaoExecucaoMinutos }}min
+                  </small>
+                </div>
+              </div>
+            </td>
+
+            <!-- Data Solicitação -->
+            <td>
+              <small style="color: #ecf0f1;">
+                {{ formatarData(relatorio.dataSolicitacao) }}
+              </small>
+            </td>
+
+            <!-- Data Agendamento -->
+            <td>
+              <small style="color: #ecf0f1;" *ngIf="relatorio.agendarPara">
+                {{ formatarData(relatorio.agendarPara) }}
+              </small>
+              <small style="color: #bdc3c7;" *ngIf="!relatorio.agendarPara">
+                Imediato
+              </small>
+            </td>
+
+            <!-- Arquivo -->
+            <td>
+              <div *ngIf="canDownload(relatorio)" style="display: flex; flex-direction: column; gap: 0.2rem;">
+                <button pButton type="button"
+                        icon="pi pi-download"
+                        label="Download"
+                        class="p-button-sm p-button-success p-button-outlined"
+                        (click)="downloadRelatorio(relatorio)">
+                </button>
+                <small style="color: #bdc3c7;" *ngIf="relatorio.tamanhoArquivoFormatado">
+                  {{ relatorio.tamanhoArquivoFormatado }}
+                </small>
+              </div>
+              <span *ngIf="!canDownload(relatorio)" style="color: #bdc3c7; font-style: italic;">
+                N/A
+              </span>
+            </td>
+
+            <!-- Ações -->
+            <td>
+              <div style="display: flex; gap: 0.3rem;">
+                <!-- Cancelar -->
+                <button pButton type="button"
+                        icon="pi pi-times"
+                        class="p-button-sm p-button-warning p-button-outlined p-button-rounded"
+                        (click)="cancelarRelatorio(relatorio)"
+                        *ngIf="canCancel(relatorio.status)"
+                        title="Cancelar relatório">
+                </button>
+
+                <!-- Excluir -->
+                <button pButton type="button"
+                        icon="pi pi-trash"
+                        class="p-button-sm p-button-danger p-button-outlined p-button-rounded"
+                        (click)="excluirRelatorio(relatorio)"
+                        *ngIf="canDelete(relatorio.status)"
+                        title="Excluir relatório">
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <!-- Mensagem quando não há dados -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 3rem;">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                <i class="pi pi-file-o" style="font-size: 3rem; color: #bdc3c7;"></i>
+                <span style="color: #ecf0f1; font-size: 1.1rem;">
+                  Nenhum relatório encontrado
+                </span>
+                <small style="color: #bdc3c7;">
+                  Gere seu primeiro relatório usando o formulário acima
+                </small>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <!-- Detalhes do Relatório (expandível) -->
+      <ng-template pTemplate="rowexpansion" let-relatorio>
+        <tr>
+          <td colspan="7">
+            <div style="padding: 1rem; background: #2c3e50; border-radius: 8px; margin: 0.5rem 0;">
+              <h5 style="color: #ecf0f1; margin-bottom: 1rem;">Detalhes do Relatório</h5>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div>
+                  <strong style="color: #3498db;">Sistema:</strong>
+                  <span style="color: #ecf0f1; margin-left: 0.5rem;">{{ relatorio.sistema }}</span>
+                </div>
+
+                <div *ngIf="relatorio.dataInicioExecucao">
+                  <strong style="color: #3498db;">Iniciado em:</strong>
+                  <span style="color: #ecf0f1; margin-left: 0.5rem;">
+                    {{ formatarData(relatorio.dataInicioExecucao) }}
+                  </span>
+                </div>
+
+                <div *ngIf="relatorio.dataConclusao">
+                  <strong style="color: #3498db;">Concluído em:</strong>
+                  <span style="color: #ecf0f1; margin-left: 0.5rem;">
+                    {{ formatarData(relatorio.dataConclusao) }}
+                  </span>
+                </div>
+
+                <div *ngIf="relatorio.caminhoArquivo">
+                  <strong style="color: #3498db;">Arquivo:</strong>
+                  <span style="color: #ecf0f1; margin-left: 0.5rem;">Disponível</span>
+                </div>
+              </div>
+
+              <div *ngIf="relatorio.mensagemStatus" style="margin-top: 1rem;">
+                <strong style="color: #3498db;">Mensagem:</strong>
+                <p style="color: #ecf0f1; margin: 0.5rem 0 0 0; padding: 0.5rem; background: #34495e; border-radius: 4px;">
+                  {{ relatorio.mensagemStatus }}
+                </p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
     </div>
   </div>
 
   <!-- Mensagem quando não logado -->
   <div *ngIf="!usuarioLogado" class="text-center" style="padding: 4rem 2rem;">
-    <i class="pi pi-lock" style="font-size: 4rem; color: #bdc3c7; margin-bottom: 1rem;"></i>
+    <i class="pi pi-lock" style="font-size: 4rem; color: #bdc3c7; margin-bottom: 1rem; display: block;"></i>
     <h3 style="color: #ecf0f1; margin-bottom: 1rem; font-weight: 600;">Acesso Restrito</h3>
-    <p style="color: #bdc3c7; margin-bottom: 2rem; font-size: 1.1rem;">Você precisa estar logado para acessar os relatórios.</p>
-    <button pButton type="button" label="Fazer Login" icon="pi pi-sign-in" class="p-button-primary p-button-lg" (click)="mostrarModalLogin = true"></button>
+    <p style="color: #bdc3c7; margin-bottom: 2rem; font-size: 1.1rem;">
+      Você precisa estar logado para acessar os relatórios.
+    </p>
+    <button pButton type="button"
+            label="Fazer Login"
+            icon="pi pi-sign-in"
+            class="p-button-primary p-button-lg"
+            (click)="mostrarModalLogin = true">
+    </button>
   </div>
 </div>
 
@@ -69,7 +355,7 @@
   [resizable]="false">
 
   <div class="p-field mb-4">
-    <label for="usuario-modal">Usuário</label>
+    <label for="usuario-modal">Usuário *</label>
     <input
       id="usuario-modal"
       type="text"
@@ -77,7 +363,8 @@
       [(ngModel)]="usuario"
       placeholder="Digite o seu usuário"
       class="w-full"
-      (keyup.enter)="logar()" />
+      (keyup.enter)="logar()"
+      autofocus />
   </div>
 
   <ng-template pTemplate="footer">
@@ -102,3 +389,13 @@
     </div>
   </ng-template>
 </p-dialog>
+
+<!-- Toast para notificações -->
+<p-toast position="top-right" [life]="5000"></p-toast>
+
+<!-- Dialog de confirmação -->
+<p-confirmDialog
+  [style]="{width: '450px'}"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text">
+</p-confirmDialog>
