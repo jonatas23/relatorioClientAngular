@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {NotificationService} from './services/notification-service';
+import {WebSocketService} from './services/web-socket-service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import {NotificationService} from './services/notification-service';
 })
 export class App implements OnDestroy {
 
-  constructor(private notificationService: NotificationService) {
+  constructor(private notificationService: WebSocketService) {
   }
 
   ngOnDestroy(): void {

@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService {
+export class WebSocketService {
   private stompClient!: Client;
   private notificationSubject = new Subject<string>();
 

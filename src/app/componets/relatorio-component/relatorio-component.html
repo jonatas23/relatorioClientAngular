@@ -143,10 +143,6 @@
               Status
               <p-sortIcon field="status"></p-sortIcon>
             </th>
-            <th pSortableColumn="progresso" style="width: 15%;">
-              Progresso
-              <p-sortIcon field="progresso"></p-sortIcon>
-            </th>
             <th pSortableColumn="dataSolicitacao" style="width: 15%;">
               Solicitado em
               <p-sortIcon field="dataSolicitacao"></p-sortIcon>
@@ -185,23 +181,6 @@
                 [value]="relatorio.status"
                 [severity]="getStatusSeverity(relatorio.status)">
               </p-tag>
-            </td>
-
-            <!-- Progresso -->
-            <td>
-              <div style="display: flex; flex-direction: column; gap: 0.3rem;">
-                <p-progressBar
-                  [value]="relatorio.progresso"
-                  [showValue]="false"
-                  styleClass="progress-bar-sm">
-                </p-progressBar>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <small style="color: #bdc3c7;">{{ relatorio.progresso }}%</small>
-                  <small *ngIf="relatorio.duracaoExecucaoMinutos" style="color: #bdc3c7;">
-                    {{ relatorio.duracaoExecucaoMinutos }}min
-                  </small>
-                </div>
-              </div>
             </td>
 
             <!-- Data Solicitação -->

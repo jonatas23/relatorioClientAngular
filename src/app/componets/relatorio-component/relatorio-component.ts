@@ -11,18 +11,16 @@ import {Select} from 'primeng/select';
 import {Dialog} from 'primeng/dialog';
 import {TableModule} from 'primeng/table';
 import {Tag} from 'primeng/tag';
-import {ProgressBar} from 'primeng/progressbar';
 import {Toast} from 'primeng/toast';
 import {ConfirmDialog} from 'primeng/confirmdialog';
 import {ConfirmationService, MessageService} from 'primeng/api';
 
 // Services
-import {NotificationService} from '../../services/notification-service';
+import {WebSocketService} from '../../services/web-socket-service';
 import {RelatorioService} from '../../services/relatorio-service';
 
 // Interfaces
 import {
-  NotificacaoStatus,
   RelatorioStatusResponse,
   SolicitacaoRelatorioRequest,
   StatusRelatorio,
@@ -40,7 +38,6 @@ import {
     Select,
     Dialog,
     Tag,
-    ProgressBar,
     Toast,
     ConfirmDialog,
     TableModule
@@ -78,7 +75,7 @@ export class RelatorioComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private notificationService: NotificationService,
+    private notificationService: WebSocketService,
     private relatorioService: RelatorioService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
